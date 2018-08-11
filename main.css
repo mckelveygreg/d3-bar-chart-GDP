@@ -1,3 +1,7 @@
 #root {
     margin: 100px;
 }
+
+.bar:hover {
+    fill: aqua;
+}

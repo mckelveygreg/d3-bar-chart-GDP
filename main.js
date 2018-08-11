@@ -9,6 +9,7 @@ fetch(url)
     buildGraph(data);
 });
 
+
 // Build Graph
 function buildGraph(data) {
     console.log(data);
@@ -27,40 +28,51 @@ function buildGraph(data) {
     root.appendChild(graph);
 
     const dataset = data.data;
-    
+
     // adjust for window size! 
     const w = 750;
     const h = 500;
     const padding = 100;
+    const barWidth = (w-padding*2)/dataset.length;
 
     const svg = d3.select(graph)
                     .append('svg')
                     .attr('width', w)
                     .attr('height', h);
-
-   console.log(dataset[dataset.length-1][0]);
-   //console.log(d3.time.dataset[0][0]);
    
-   // -- X-axis formatting
-   const parseTime = d3.timeParse('%Y-%m-%d');
-   console.log(parseTime(dataset[0][0]));
-
+   // -- X-axis scale
+    const parseTime = d3.timeParse('%Y-%m-%d');
     const xTimeScale = d3.scaleTime()
                         .domain([parseTime(dataset[0][0]), parseTime(dataset[dataset.length - 1][0])])
                         .range([padding,w - padding]);
     const xAxis = d3.axisBottom(xTimeScale).tickFormat(d3.timeFormat('%Y'));
 
-    // -- y-axis
+    // -- y-axis scale
     const gdpMax = d3.max(dataset, d => d[1]);
     const gdpMin = d3.min(dataset, d => d[1]);
-    
-    console.log('min: ' + gdpMin + "; max: " + gdpMax);
-
     const yScale = d3.scaleLinear()
                         .domain([gdpMin, gdpMax])
                         .range([h - padding, padding]);
     const yAxis = d3.axisLeft(yScale);
     
+    console.log(yScale(gdpMin));
+    console.log(yScale(gdpMax));
+    const GDP = dataset.map(d => d[1]);
+   // console.log(GDP);
+    console.log(barWidth);
+    
+    svg.selectAll('rect')
+        .data(GDP)
+        .enter()
+        .append('rect')
+        .attr('x', (d, i) => ((i * barWidth) + padding))
+        .attr('y', d => yScale(d))
+        .attr('width', barWidth)
+        .attr('height', d => (h - yScale(d) - padding))
+        .attr('fill', 'black')
+        .attr('class', 'bar');
+    
+    // Axes
     svg.append('g')
         .attr('transform', `translate(0,${h - padding})`)
         .property('id', 'x-axis')
