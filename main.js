@@ -47,7 +47,7 @@ function buildGraph(data) {
 
     const xTimeScale = d3.scaleTime()
                         .domain([parseTime(dataset[0][0]), parseTime(dataset[dataset.length - 1][0])])
-                        .range([0,w - padding]);
+                        .range([padding,w - padding]);
     const xAxis = d3.axisBottom(xTimeScale).tickFormat(d3.timeFormat('%Y'));
 
     // -- y-axis
@@ -58,16 +58,16 @@ function buildGraph(data) {
 
     const yScale = d3.scaleLinear()
                         .domain([gdpMin, gdpMax])
-                        .range([h - padding, 0]);
+                        .range([h - padding, padding]);
     const yAxis = d3.axisLeft(yScale);
     
     svg.append('g')
-        .attr('transform', `translate(${padding},${padding})`)
+        .attr('transform', `translate(0,${h - padding})`)
         .property('id', 'x-axis')
         .call(xAxis);
 
     svg.append('g')
-        .attr('transform', `translate(${padding},${padding})`)
+        .attr('transform', `translate(${padding},0)`)
         .property('id', 'y-axis')
         .call(yAxis);
 
