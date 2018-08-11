@@ -30,9 +30,9 @@ function buildGraph(data) {
     const dataset = data.data;
 
     // adjust for window size! 
-    const w = 750;
-    const h = 500;
-    const padding = 100;
+    const w = root.clientWidth * 0.9;
+    const h = root.clientHeight * 0.7;
+    const padding = 50;
     const barWidth = (w-padding*2)/dataset.length;
 
     const svg = d3.select(graph)
@@ -51,7 +51,7 @@ function buildGraph(data) {
     const gdpMax = d3.max(dataset, d => d[1]);
     const gdpMin = d3.min(dataset, d => d[1]);
     const yScale = d3.scaleLinear()
-                        .domain([gdpMin, gdpMax])
+                        .domain([0, gdpMax])  // needs to start at 0
                         .range([h - padding, padding]);
     const yAxis = d3.axisLeft(yScale);
     
