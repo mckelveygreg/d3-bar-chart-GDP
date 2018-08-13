@@ -58,9 +58,30 @@ function buildGraph(data) {
     console.log(yScale(gdpMin));
     console.log(yScale(gdpMax));
     const GDP = dataset.map(d => d[1]);
-   // console.log(GDP);
-    console.log(barWidth);
-    
+    const quarterYear = dataset.map(d => {
+        const year = d[0].slice(0,4)
+        const month = d[0].slice(5,7);
+        let quarter = '';
+        if (month == '01') {
+            quarter = 'Q1'
+        } else if (month == '04') {
+            quarter = 'Q2'
+        } else if (month == '07') {
+            quarter = 'Q3'
+        } else if (month == '10') {
+            quarter = 'Q4'
+        }
+        return year + ' ' + quarter;
+    });
+   
+    var tooltip = d3.select("body")
+	.append("div")
+	.style("position", "absolute")
+	.style("z-index", "10")
+	.style("opacity", "0")
+    .text("a simple tooltip")
+    .attr('id', 'tooltip');
+	
     svg.selectAll('rect')
         .data(GDP)
         .enter()
@@ -73,9 +94,19 @@ function buildGraph(data) {
         .attr('class', 'bar')
         .attr('data-date', (d, i) => dataset[i][0])
         .attr('data-gdp', (d, i) => dataset[i][1])
-        .append('title')
-        .text((d, i) => dataset[i][0])
-        .attr('id', 'tooltip');
+        .on("mouseover", (d, i)=> (
+            tooltip.style("opacity", "0.8")
+                    .html(
+                        `${quarterYear[i]}<br/>
+                        GDP: \$${d} Billion`
+                    )
+                    .attr('data-date', dataset[i][0])))
+        .on("mousemove", function(){return tooltip.style("top", "500px").style("left",(d3.event.pageX+10)+"px");})
+        .on("mouseout", function(){return tooltip.style("opacity", "0");});
+        
+        // .append('title')
+        // .text((d, i) => dataset[i][0])
+        // .attr('id', 'tooltip');
     
     
 
