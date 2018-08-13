@@ -70,8 +70,15 @@ function buildGraph(data) {
         .attr('width', barWidth)
         .attr('height', d => (h - yScale(d) - padding))
         .attr('fill', 'black')
-        .attr('class', 'bar');
+        .attr('class', 'bar')
+        .attr('data-date', (d, i) => dataset[i][0])
+        .attr('data-gdp', (d, i) => dataset[i][1])
+        .append('title')
+        .text((d, i) => dataset[i][0])
+        .attr('id', 'tooltip');
     
+    
+
     // Axes
     svg.append('g')
         .attr('transform', `translate(0,${h - padding})`)
