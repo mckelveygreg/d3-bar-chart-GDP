@@ -1,19 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=Libre+Baskerville');
+
 html, body {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    background: #ddd;
+    font-family: 'Libre Baskerville', serif;
 }
 
 #root {
     box-sizing: border-box;
-    margin: 0 auto;
+    margin: 20px auto 0 auto;
+    padding: 20px;
     height: 90vh;
     max-width: 1000px;
-   
+    text-align: center;
+    background: linear-gradient(to bottom right, rgba(0, 140, 255, 0.79), #11111150);
+    box-shadow: 5px 5px 15px black;
+    border-radius: 3px;
 }
 
 .bar:hover {
-    fill: aqua;
+    fill: lightsteelblue;
 }
 
 #tooltip {
@@ -23,7 +31,7 @@ html, body {
     position: absolute;
     text-align: center;
     width: 150px;
-    height: 50px;
+    height: 75px;
     padding: 2px;
     font: 12px;
     background: lightsteelblue;

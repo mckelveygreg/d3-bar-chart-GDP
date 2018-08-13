@@ -19,7 +19,7 @@ function buildGraph(data) {
     
     title.textContent = data.name;
     const subTitle = document.createElement('p');
-    subTitle.textContent = data.description;
+    subTitle.textContent = "A Guide to the National Income and Product Accounts of the United States";
     root.appendChild(title);
     root.appendChild(subTitle);    
 
@@ -102,12 +102,7 @@ function buildGraph(data) {
                     )
                     .attr('data-date', dataset[i][0])))
         .on("mousemove", function(){return tooltip.style("top", "500px").style("left",(d3.event.pageX+10)+"px");})
-        .on("mouseout", function(){return tooltip.style("opacity", "0");});
-        
-        // .append('title')
-        // .text((d, i) => dataset[i][0])
-        // .attr('id', 'tooltip');
-    
+        .on("mouseout", function(){return tooltip.style("opacity", "0");});   
     
 
     // Axes
@@ -121,6 +116,15 @@ function buildGraph(data) {
         .property('id', 'y-axis')
         .call(yAxis);
 
+    svg.append("text")
+        .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+        .attr("transform", "translate("+ (50 + padding/2) +","+(-25 + h/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
+        .text(`Gross Domestic Value in Billions of USD`);
+
+    svg.append("text")
+        .attr("text-anchor", "start")  // this makes it easy to centre the text as the transform is applied to the anchor
+        .attr("transform", "translate("+ (w/2) +","+(h-10)+")")  // centre below axis
+        .text("More information: http://www.bea.gov/national/pdf/nipaguid.pdf");
 
   
 }
