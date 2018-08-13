@@ -80,7 +80,9 @@ function buildGraph(data) {
 	.style("z-index", "10")
 	.style("opacity", "0")
     .text("a simple tooltip")
-    .attr('id', 'tooltip');
+    .attr('id', 'tooltip')
+    .style('left', '0')
+    .style('top', '0');
 	
     svg.selectAll('rect')
         .data(GDP)
