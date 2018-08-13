@@ -124,8 +124,8 @@ function buildGraph(data) {
         .text(`Gross Domestic Value in Billions of USD`);
 
     svg.append("text")
-        .attr("text-anchor", "start")  // this makes it easy to centre the text as the transform is applied to the anchor
-        .attr("transform", "translate("+ (w/2) +","+(h-10)+")")  // centre below axis
+        .attr("text-anchor", "end")  // this makes it easy to centre the text as the transform is applied to the anchor
+        .attr("transform", "translate("+ (w) +","+(h-10)+")")  // centre below axis
         .text("More information: http://www.bea.gov/national/pdf/nipaguid.pdf");
 
   
